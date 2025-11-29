@@ -83,6 +83,7 @@ def kotoba_conf(app: Sphinx, config: Config):
             'data-emit-metadata',
             'data-input-position',
             'data-theme', 'data-lang',
+            'data-loading',
             'crossorigin',
         }
         if 'data-repo' not in giscus or 'data-repo-id' not in giscus:
@@ -97,7 +98,7 @@ def kotoba_conf(app: Sphinx, config: Config):
 
         for k, v in giscus.items():
             if k not in available_settings:
-                raise ValueError(f'Unknown setting for utterances: {k}')
+                raise ValueError(f'Unknown setting for giscus: {k}')
             else:
                 js += f'script.setAttribute("{k}", "{v}");'
 
