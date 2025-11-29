@@ -50,24 +50,30 @@ def kotoba_conf(app: Sphinx, config: Config):
         available_settings = {'repo', 'issue-term', 'label', 'theme', 'crossorigin'}
         if 'repo' not in utterances:
             raise ValueError('To use utterances, you must provide a repository')
-        js = '() => {'\
+
+        js = \
+        '() => {'\
             'var script = document.createElement("script");'\
             'script.type = "text/javascript";'\
             'script.src = "https://utteranc.es/client.js";'\
-            'script.async = "async";'\
+            'script.async = "async";'
+
         for k, v in utterances.items():
             if k not in available_settings:
                 raise ValueError(f'Unknown setting for utterances: {k}')
             else:
                 js += f'script.setAttribute("{k}", "{v}");'
-        js +=
+        js += \
             'sections = document.querySelectorAll("div.section, section");'\
             'if (sections !== null && sections.length > 0) {'\
                 'section = sections[sections.length - 1];'\
                 'section.appendChild(script);'\
-            '}'
+            '}'\
+        '}'
+
         js = after_load % js
         app.add_js_file(None, body=js, kind='utterances')
+
     if giscus:
         available_settings = {
             'data-repo', 'data-repo-id',
@@ -81,22 +87,28 @@ def kotoba_conf(app: Sphinx, config: Config):
         }
         if 'data-repo' not in giscus or 'data-repo-id' not in giscus:
             raise ValueError('To use giscus, you must provide a repository')
-        js = '() => {'\
+
+        js = \
+        '() => {'\
             'var script = document.createElement("script");'\
             'script.type = "text/javascript";'\
             'script.src = "https://giscus.app/client.js";'\
-            'script.async = "async";'\
+            'script.async = "async";'
+
         for k, v in giscus.items():
             if k not in available_settings:
                 raise ValueError(f'Unknown setting for utterances: {k}')
             else:
                 js += f'script.setAttribute("{k}", "{v}");'
-        js +=
+
+        js += \
             'sections = document.querySelectorAll("div.section, section");'\
             'if (sections !== null && sections.length > 0) {'\
                 'section = sections[sections.length - 1];'\
                 'section.appendChild(script);'\
-            '}'
+            '}'\
+        '}'
+
         js = after_load % js
         app.add_js_file(None, body=js, kind='giscus')
 
