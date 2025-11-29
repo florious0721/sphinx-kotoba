@@ -1,2 +1,0 @@
-graft doc/
-prune doc/_build
